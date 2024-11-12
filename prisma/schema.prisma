@@ -14,19 +14,21 @@ datasource db {
 }
 
 model User {
-  id          String      @unique @default(uuid())
+  id          String      @id @unique @default(uuid())
   firstName   String
   lastName    String
-  phoneNumber String
+  phoneNumber String?     @unique
+  email       String?     @unique
+  password    String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  language    Languages
+  language    Languages   @default(ENGLISH)
   accountType AccountType @default(DEFAULT)
-  reminders Reminder[]
+  reminders   Reminder[]
 }
 
 model Reminder {
-  id             String               @unique @default(uuid())
+  id             String               @id @unique @default(uuid())
   title          String
   description    String
   priority       ReminderPriorityType
@@ -43,13 +45,14 @@ model Reminder {
 
 enum AccountType {
   DEFAULT
-  PEMIUM
+  PREMIUM
 }
 
 enum Languages {
   AMHARIC
   OROMO
   TIGRIGNA
+  ENGLISH
 }
 
 enum ReminderType {
