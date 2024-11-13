@@ -5,24 +5,33 @@ import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {};
+  constructor(private authService: AuthService) { };
 
   @Get('google')
   @UseGuards(GoogleOauthGuard)
-  async googleAuth() {};
+  async googleAuth() { };
 
   @Get('google/callback')
   @UseGuards(GoogleOauthGuard)
   async googleAuthCallback(@Req() req, @Res() res: Response) {
-    const token = await this.authService.signIn(req.user);
+    try {
+      const token = await this.authService.signInWithGoogle(req.user);
 
-    res.cookie('access_token', token, {
-      maxAge: 2592000000, // 30 days
-      sameSite: true,
-      secure: false, // TODO - set to true in production with HTTPS
-      httpOnly: true
-    });
+      if (!token) {
+        return res.status(HttpStatus.BAD_REQUEST).send('Error generating JWT token');
+      }
 
-    return res.status(HttpStatus.OK);
+      res.cookie('access_token', token, {
+        maxAge: 2592000000, // 30 days
+        sameSite: true,
+        secure: false, // TODO - Set to true in production with HTTPS
+        httpOnly: true,
+      });
+
+      return res.status(HttpStatus.OK).send('Successfully logged in');
+    } catch (error) {
+      console.error('Error in Google Auth callback:', error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Something went wrong during login');
+    }
   }
 }
