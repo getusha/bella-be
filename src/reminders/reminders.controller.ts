@@ -35,12 +35,12 @@ export class RemindersController {
   }
 
   @Delete(':id')
-  async deleteOne(@Param('id') reminderId) {
+  async deleteOne(@Param('id') reminderId: ReminderDto['ownerId']) {
     return await this.remindersService.deleteOne(reminderId);
   }
 
   @Get()
-  async findMany(@Req() req) {
+  async findMany(@Req() req: any) {
     return await this.remindersService.findMany(req.decodedData.id);
   }
 }
