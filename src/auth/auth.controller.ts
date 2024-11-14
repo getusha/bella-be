@@ -13,8 +13,8 @@ export class AuthController {
   }
 
   @Post('google')
-  async authenticate(@Body() body) {
-    const { token, ...newUser } = body;
+  async authenticate(@Body() body: { token: string }) {
+    const { token } = body;
     return await this.authService.verifyGoogleToken(token);
   }
 }
