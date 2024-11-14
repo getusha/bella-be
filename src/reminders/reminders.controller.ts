@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   UseGuards,
@@ -23,6 +24,12 @@ export class RemindersController {
 
   @Get(':id')
   async findOne(@Param('id') id: ReminderDto['ownerId']) {
+    const reminder = this.remindersService.findOne(id)
+
+    if(!reminder) {
+        throw new NotFoundException();
+    }
+
     return await this.remindersService.findOne(id);
   }
 
