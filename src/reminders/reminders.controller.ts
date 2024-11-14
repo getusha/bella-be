@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -39,7 +40,7 @@ export class RemindersController {
   }
 
   @Get()
-  async findMany(ownerId: ReminderDto['ownerId']) {
-    return await this.remindersService.findMany(ownerId);
+  async findMany(@Req() req) {
+    return await this.remindersService.findMany(req.decodedData.id);
   }
 }
