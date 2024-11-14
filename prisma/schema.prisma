@@ -18,7 +18,7 @@ model User {
   firstName   String
   lastName    String
   phoneNumber String?
-  email       String?
+  email       String?     @unique
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   language    Languages?
