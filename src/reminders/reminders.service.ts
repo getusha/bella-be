@@ -7,7 +7,7 @@ export class RemindersService {
   constructor(private prismaService: PrismaService) {}
 
   async createOne(reminder: ReminderDto) {
-    await this.prismaService.reminder.create({
+    return await this.prismaService.reminder.create({
       data: reminder,
     });
   }
