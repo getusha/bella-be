@@ -40,7 +40,7 @@ export class AuthService {
 
   async verifyFacebookUser(token: string) {
     try {
-      const response = await fetch(`${process.env.FACEBOOK_GET_USER_DATA}&access_token=${token}`);
+      const response = await fetch(`https://graph.facebook.com/me?fields=last_name,first_name,email&access_token=${token}`);
       const payload = await response.json();
 
       const { first_name, last_name, email } = payload;
