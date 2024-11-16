@@ -17,4 +17,10 @@ export class AuthController {
     const { token } = body;
     return await this.authService.verifyGoogleToken(token);
   }
+
+  @Post('facebook')
+  async authenticateUser(@Body() body: { token: string }) {
+    const { token } = body;
+    return await this.authService.verifyFacebookUser(token);
+  }
 }
