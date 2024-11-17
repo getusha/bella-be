@@ -12,10 +12,11 @@ export class RemindersService {
     });
   }
 
-  async edit(reminderId: ReminderDto["ownerId"], updatedReminder: Partial<ReminderDto>) {
+  async updateOne(body: Partial<ReminderDto> & {id: ReminderDto["ownerId"]}) {
+    const {id, ...updatedReminder} = body;
     return await this.prismaService.reminder.update({
       where: {
-        id: reminderId
+        id
       },
       data: updatedReminder
     });
