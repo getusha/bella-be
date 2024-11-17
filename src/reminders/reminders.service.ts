@@ -12,6 +12,16 @@ export class RemindersService {
     });
   }
 
+  async updateOne(body: Partial<ReminderDto> & {id: ReminderDto["ownerId"]}) {
+    const {id, ...updatedReminder} = body;
+    return await this.prismaService.reminder.update({
+      where: {
+        id
+      },
+      data: updatedReminder
+    });
+  }
+
   async findOne(id: ReminderDto['ownerId']) {
     return await this.prismaService.reminder.findUnique({
       where: {
