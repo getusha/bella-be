@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { OAuth2Client } from 'google-auth-library';
 import { UsersService } from 'src/users/users.service';
@@ -36,6 +36,31 @@ export class AuthService {
       accessToken: this.generateJwtToken({ email: user.email, id: user.id }),
       profile: user,
     };
+  }
+
+  async verifyFacebookUser(token: string) {
+    try {
+      const response = await fetch(`https://graph.facebook.com/me?fields=last_name,first_name,email&access_token=${token}`);
+      const payload = await response.json();
+
+      const { first_name, last_name, email } = payload;
+      let user = await this.usersService.findOne(email);
+
+      if (!user) {
+        user = await this.usersService.createOne({
+          firstName: first_name,
+          lastName: last_name,
+          email: email
+        });
+      }
+
+      return {
+        accessToken: this.generateJwtToken({ email: user.email, id: user.id }),
+        profile: user
+      };
+    } catch {
+      throw new InternalServerErrorException();
+    }
   }
 
   generateJwtToken(user: { email: string; id: string }) {
