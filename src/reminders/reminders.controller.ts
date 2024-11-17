@@ -23,6 +23,12 @@ export class RemindersController {
     return await this.remindersService.createOne(body);
   }
 
+  @Post('edit')
+  async edit(@Body() body: { id: ReminderDto["ownerId"], updateReminder: Partial<ReminderDto> }) {
+    const { id, updateReminder } = body;
+    return await this.remindersService.edit(id, updateReminder);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: ReminderDto['ownerId']) {
     const reminder = await this.remindersService.findOne(id)
