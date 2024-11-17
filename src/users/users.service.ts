@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from 'src/auth/dtos/CreateUserDto.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ReminderDto } from 'src/reminders/dtos/CreateReminderDto.dto';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +18,18 @@ export class UsersService {
       where: {
         ...(email ? { email } : { id }),
       },
+    });
+  }
+
+  async updateOne(
+    userId: ReminderDto['ownerId'],
+    updatedProfile: Partial<CreateUserDto>,
+  ) {
+    return await this.prismaService.user.update({
+      where: {
+        id: userId,
+      },
+      data: updatedProfile,
     });
   }
 }
