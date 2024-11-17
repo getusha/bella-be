@@ -9,6 +9,7 @@ import {
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateUserDto } from 'src/auth/dtos/CreateUserDto.dto';
 import { UsersService } from 'src/users/users.service';
+import { UpdateProfileDto } from './dtos/UpdateProfile.dto';
 
 @UseGuards(AuthGuard)
 @Controller('users')
@@ -23,7 +24,7 @@ export class UsersController {
   @Patch('profile')
   async updateProfileDetails(
     @Req() req: any,
-    @Body() updatedProfile: Partial<CreateUserDto>,
+    @Body() updatedProfile: UpdateProfileDto,
   ) {
     return await this.usersService.updateOne(
       req.decodedData.id,
