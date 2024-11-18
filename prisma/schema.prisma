@@ -14,16 +14,17 @@ datasource db {
 }
 
 model User {
-  id          String      @unique @default(uuid())
-  firstName   String
-  lastName    String
-  phoneNumber String?
-  email       String?     @unique
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  language    Languages?
-  accountType AccountType @default(DEFAULT)
-  reminders Reminder[]
+  id             String      @unique @default(uuid())
+  firstName      String
+  lastName       String
+  phoneNumber    String?
+  email          String?     @unique
+  profilePicture String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  language       Languages?
+  accountType    AccountType @default(DEFAULT)
+  reminders      Reminder[]
 
   @@map("users")
 }

@@ -21,4 +21,8 @@ export class UpdateProfileDto {
   @IsEnum(Languages)
   @IsOptional()
   language?: Languages;
+
+  @IsString()
+  @IsOptional()
+  profilePicture?: string;
 }
