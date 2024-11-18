@@ -21,14 +21,19 @@ export class AuthService {
       throw new UnauthorizedException('Invalid Google token');
     }
 
-    const { given_name, family_name, email } = payload;
+    const { given_name, family_name, email, picture } = payload;
     let user = await this.usersService.findOne(email);
+
+    if(user && picture && !user.profilePicture) {
+      user = await this.usersService.updateOne(user.id, { profilePicture: picture });
+    }
 
     if (!user) {
       user = await this.usersService.createOne({
         firstName: given_name,
         lastName: family_name,
         email: email,
+        profilePicture: picture
       });
     }
 
