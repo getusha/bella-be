@@ -5,6 +5,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Req,
   UseGuards,
@@ -12,6 +13,7 @@ import {
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ReminderDto } from 'src/reminders/dtos/CreateReminderDto.dto';
 import { RemindersService } from 'src/reminders/reminders.service';
+import { UpdateReminderDto } from './dtos/UpdateReminderDto.dto';
 
 @Controller('reminders')
 @UseGuards(AuthGuard)
@@ -23,8 +25,8 @@ export class RemindersController {
     return await this.remindersService.createOne(body);
   }
 
-  @Post('edit')
-  async edit(@Body() updatedReminder: { id: ReminderDto["ownerId"] } & Partial<ReminderDto>) {
+  @Patch('edit')
+  async edit(@Body() updatedReminder: UpdateReminderDto) {
     return await this.remindersService.updateOne(updatedReminder);
   }
 

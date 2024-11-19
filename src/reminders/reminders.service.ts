@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ReminderDto } from 'src/reminders/dtos/CreateReminderDto.dto';
+import { UpdateReminderDto } from './dtos/UpdateReminderDto.dto';
 
 @Injectable()
 export class RemindersService {
@@ -12,7 +13,7 @@ export class RemindersService {
     });
   }
 
-  async updateOne(body: Partial<ReminderDto> & {id: ReminderDto["ownerId"]}) {
+  async updateOne(body: UpdateReminderDto) {
     const {id, ...updatedReminder} = body;
     return await this.prismaService.reminder.update({
       where: {
