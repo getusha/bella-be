@@ -27,7 +27,7 @@ export class UpdateReminderDto {
 
   @IsNumber()
   @IsOptional()
-  deliveryOffset?: number;
+  deliveryOffset: number;
 
   @IsDate()
   @IsOptional()
