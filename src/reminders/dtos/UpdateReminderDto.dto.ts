@@ -7,23 +7,23 @@ export class UpdateReminderDto {
 
   @IsString()
   @IsOptional()
-  title?: string;
+  title: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description: string;
 
   @IsEnum(ReminderPriorityType)
   @IsOptional()
-  priority?: ReminderPriorityType;
+  priority: ReminderPriorityType;
 
   @IsEnum(ReminderType)
   @IsOptional()
-  type?: ReminderType;
+  type: ReminderType;
 
   @IsEnum(ReminderDeliveryType)
   @IsOptional()
-  delivery?: ReminderDeliveryType;
+  delivery: ReminderDeliveryType;
 
   @IsNumber()
   @IsOptional()
@@ -31,9 +31,9 @@ export class UpdateReminderDto {
 
   @IsDate()
   @IsOptional()
-  schedule?: Date;
+  schedule: Date;
 
   @IsEnum(ReminderStatus)
   @IsOptional()
-  status?: ReminderStatus;
+  status: ReminderStatus;
 }
